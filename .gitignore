@@ -1,3 +1,4 @@
 ignore/
 *.pt
 *.bin
+__pycache__/
