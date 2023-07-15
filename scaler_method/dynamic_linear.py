@@ -14,7 +14,7 @@ class Int8Linear(nn.Module):
         weight, scale, zero_point = self.quantize(linear.weight.detach())
         self.register_buffer("scale", scale)
         self.register_buffer("zero_point", zero_point)
-        self.weight = weight
+        self.register_buffer("weight", weight)
         self.bias = linear.bias
 
     def quantize(self, x):
