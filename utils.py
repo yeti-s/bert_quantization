@@ -80,7 +80,8 @@ def train_model(model, train_data_loader, device=torch.device('cuda'), epochs=EP
                 'optimizer_state_dict': optimizer.state_dict(),
             }, checkpoint_path)
 
-    os.remove(checkpoint_path)
+    if os.path.exists(checkpoint_path):
+        os.remove(checkpoint_path)
     print(f' --- train finished, elapsed: {format_time(time.time() - start_time)}')
 
 def evaluate_model(model, test_data_loader, device=torch.device('cuda')):
