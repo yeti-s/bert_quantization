@@ -84,7 +84,7 @@ def train_model(model, train_data_loader, device=torch.device('cuda'), epochs=EP
         os.remove(checkpoint_path)
     print(f' --- train finished, elapsed: {format_time(time.time() - start_time)}')
 
-def evaluate_model(model, test_data_loader, device=torch.device('cuda')):
+def evaluate_model(model, test_data_loader, device=torch.device('cuda'), multiple_classes=False):
     total_eval_loss = 0
     labels = np.array([])
     predictions = np.array([])
@@ -117,7 +117,7 @@ def evaluate_model(model, test_data_loader, device=torch.device('cuda')):
         update_progress((step+1) * batch_size / num_data * 100)
     
     avg_eval_loss = total_eval_loss / len(test_data_loader)
-    print(f' f1: {f1_score(labels, predictions)}, evaluating loss: {avg_eval_loss:.4f}')
+    print(f' f1: {f1_score(labels, predictions, average="macro" if multiple_classes else "binary")}, evaluating loss: {avg_eval_loss:.4f}')
     print(f' {np.sum(predictions == labels)} / {predictions.shape[0]} ')
     print(f' --- evaluation finished {format_time(time.time() - start_time)}')
 
